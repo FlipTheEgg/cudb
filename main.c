@@ -48,7 +48,7 @@ int main() {
     return EXIT_SUCCESS;
 }
 
-void printStudent(char name[NAME_SIZE], int data, int n){ //TODO : fix
+void printStudent(char name[NAME_SIZE], int data, int n){
     int year = 0; //bits 0-4
     for(int i = 0; i < 5; i++)
         year += ((data / (int)pow(2, i)) % 2) * pow(2, i);
@@ -126,7 +126,7 @@ void addStudent(int * c, student_t * student_p) {
         scanf("%1d", &d);
         if(d >= 0 && d <= 1) {
             if (d == 1)
-                data += 32; //TODO : Verify
+                data += 32;
             break;
         } else
             printf("%sinvalid input!%s\n\n", KRED, RESET);
