@@ -13,7 +13,7 @@ typedef struct {
     int data;
 } student_t;
 
-void addStudent(int * c, student_t * student_p);
+void addStudent(int * count_p, student_t * student_p);
 void listStudents(int c, student_t * student_p);
 void listOptions();
 
