@@ -21,8 +21,7 @@ int main() {
 
     student_t* student_p = malloc(10000 * sizeof(student_t));
     int cmd = -1;
-    int * studentCount = calloc(1, sizeof(int*));
-    studentCount[0] = 0;
+    int studentCount = 0;
     char in;
 
     printf("Welcome to CUDB - The C University Data Base\n");
@@ -36,9 +35,9 @@ int main() {
         cmd = in - '0';
 
         if (cmd == 1)
-            listStudents(*studentCount, student_p);
+            listStudents(studentCount, student_p);
         else if (cmd == 2)
-            addStudent(studentCount, student_p);
+            addStudent(&studentCount, student_p);
         else if (cmd == 3)
             listOptions();
         else if (cmd != 0)
@@ -90,7 +89,7 @@ void listStudents(int c, student_t * student_p) {
 }
 
 void addStudent(int * c, student_t * student_p) {
-    if(*c >= 10000)
+    if(* c >= 10000)
         printf("%sERROR: Database full%s\n", KRED, RESET);
 
     char name[NAME_SIZE];
@@ -100,13 +99,11 @@ void addStudent(int * c, student_t * student_p) {
 
     printf("Enter name (4 characters only): ");
     scanf("%s", name);
-    //printf("%s\n", name);
 
     while (1){
         printf("Enter start year (2009-2040): ");
         scanf("%d", &d);
         d -= 2009;
-        //printf("(Year: %d)\n", d);
         if(d >= 0 && d <= 31){
             for(int i = 4; i >= 0; i--) {
                 int val = (int)pow(2, i);
@@ -156,7 +153,7 @@ void addStudent(int * c, student_t * student_p) {
     if(in[0] == 'Y' || in[0] == 'y'){
         strcpy(student_p[*c].name, name);
         student_p[*c].data = data;
-        c[0]++;
+        (*c)++;
         printf("Student successfully added to database!\n\n");
     } else {
         printf("Student add aborted.\n\n");
