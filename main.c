@@ -32,12 +32,9 @@ int main() {
     while (cmd != 0) {
 
         printf("Enter action: ");
+        printf("(1: %d)\n", *count_p);
         scanf("%s", &in);
-        printf(""); // This has to be there, otherwise it doesn't work.
-                    // Don't know why, but if you know please do tell!
-                    // If it isn't, *count_p is set to some large negative value.
-                    // I've narrowed it down to it happening right here.
-                    // Unless i printf... Mysterious!
+        printf("(2: %d)\n", *count_p);
         cmd = in - '0';
 
         if (cmd == 1)
