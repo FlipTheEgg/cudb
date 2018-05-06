@@ -7,7 +7,6 @@
 #define KRED  "\x1B[31m"
 #define KHDR  "\x1B[4m"
 #define RESET "\x1B[0m"
-#define COUNT 0
 
 typedef struct {
     char name[NAME_SIZE];
