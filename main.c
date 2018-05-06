@@ -7,6 +7,7 @@
 #define KRED  "\x1B[31m"
 #define KHDR  "\x1B[4m"
 #define RESET "\x1B[0m"
+#define COUNT 0
 
 typedef struct {
     char name[NAME_SIZE];
@@ -21,23 +22,29 @@ int main() {
 
     student_t* student_p = malloc(10000 * sizeof(student_t));
     int cmd = -1;
-    int studentCount = 0;
+    int * count_p = malloc(sizeof(int));
+    *count_p = 0;
     char in;
 
     printf("Welcome to CUDB - The C University Data Base\n");
     listOptions();
 
+
     while (cmd != 0) {
 
         printf("Enter action: ");
-
-        scanf("%s", & in);
+        scanf("%s", &in);
+        printf(""); // This has to be there, otherwise it doesn't work.
+                    // Don't know why, but if you know please do tell!
+                    // If it isn't, *count_p is set to some large negative value.
+                    // I've narrowed it down to it happening right here.
+                    // Unless i printf... Mysterious!
         cmd = in - '0';
 
         if (cmd == 1)
-            listStudents(studentCount, student_p);
+            listStudents(*count_p, student_p);
         else if (cmd == 2)
-            addStudent(&studentCount, student_p);
+            addStudent(count_p, student_p);
         else if (cmd == 3)
             listOptions();
         else if (cmd != 0)
@@ -88,8 +95,9 @@ void listStudents(int c, student_t * student_p) {
     printf("\nAverage GPA = %.2f\n\n", avg);
 }
 
-void addStudent(int * c, student_t * student_p) {
-    if(* c >= 10000)
+void addStudent(int* count_p, student_t* student_p) {
+
+    if(*count_p >= 10000)
         printf("%sERROR: Database full%s\n", KRED, RESET);
 
     char name[NAME_SIZE];
@@ -147,13 +155,13 @@ void addStudent(int * c, student_t * student_p) {
     }
 
     printf("\nData entered: %d\n", data);
-    printStudent(name, data, *c);
+    printStudent(name, data, *count_p);
     printf("\nIs this OK? (y/n): ");
     scanf("%1s", in);
     if(in[0] == 'Y' || in[0] == 'y'){
-        strcpy(student_p[*c].name, name);
-        student_p[*c].data = data;
-        (*c)++;
+        strcpy(student_p[*count_p].name, name);
+        student_p[*count_p].data = data;
+        (*count_p)++;
         printf("Student successfully added to database!\n\n");
     } else {
         printf("Student add aborted.\n\n");
